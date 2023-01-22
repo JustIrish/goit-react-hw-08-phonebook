@@ -52,6 +52,7 @@ export const ContactForm = () => {
 
     const contact = { name, number };
     dispatch(addContact(contact))
+      .unwrap()
       .then(() => {
         toast.success('Contact added!');
         reset();

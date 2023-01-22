@@ -19,6 +19,7 @@ export const ContactListItem = ({ contact: { id, name, number } }) => {
   const handleOnDelete = () => {
     setIsDeleting(true);
     dispatch(deleteContact(id))
+      .unwrap()
       .then(() => {
         toast.success('Contact deleted!');
         setIsDeleting(false);
