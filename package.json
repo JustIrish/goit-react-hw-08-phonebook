@@ -4,6 +4,10 @@
   "private": true,
   "homepage": "https://JustIrish.github.io/goit-react-hw-08-phonebook/",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/lab": "^5.0.0-alpha.117",
+    "@mui/material": "^5.11.6",
     "@redux-devtools/extension": "^3.2.3",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.3",
