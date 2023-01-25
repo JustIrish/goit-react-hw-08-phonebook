@@ -1,7 +1,27 @@
+import { Helmet } from 'react-helmet';
+import { Box, Typography } from '@mui/material';
+
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to your Phonebook</h1>
-    </div>
+    <Box
+      sx={{
+        maxWidth: '800px',
+        mx: 'auto',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '80vh',
+      }}
+    >
+      <Helmet>
+        <title>MyPnonebook</title>
+      </Helmet>
+      <Typography component="h1" variant="h4">
+        Welcome to your Phonebook
+      </Typography>
+    </Box>
   );
 }

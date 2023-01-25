@@ -2,15 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { addContact } from 'redux/operations';
 import { selectContacts, selectIsLoading } from 'redux/selectors';
-import { Loader } from 'components/Loader/Loader';
 import { nanoid } from 'nanoid';
 import toast from 'react-hot-toast';
-import {
-  FormStyled,
-  LabelStyled,
-  InputStyled,
-  BtnStyled,
-} from './ContactForm.styled';
+import { Box, Typography, Container, TextField, Grid } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -68,32 +63,57 @@ export const ContactForm = () => {
   };
 
   return (
-    <FormStyled onSubmit={handleSubmit}>
-      <LabelStyled htmlFor={nameInputId}>Name</LabelStyled>
-      <InputStyled
-        type="text"
-        name="name"
-        id={nameInputId}
-        value={name}
-        onChange={handleChange}
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        required
-      />
-      <LabelStyled htmlFor={numberInputId}>Number</LabelStyled>
-      <InputStyled
-        type="tel"
-        name="number"
-        id={numberInputId}
-        value={number}
-        onChange={handleChange}
-        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        required
-      />
-      <BtnStyled type="submit" disabled={isLoading}>
-        {isLoading ? <Loader /> : 'Add contact'}
-      </BtnStyled>
-    </FormStyled>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <TextField
+                type="text"
+                name="name"
+                required
+                fullWidth
+                id={nameInputId}
+                value={name}
+                onChange={handleChange}
+                label="Name"
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="tel"
+                name="number"
+                required
+                fullWidth
+                id={numberInputId}
+                value={number}
+                onChange={handleChange}
+                label="Number"
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              />
+            </Grid>
+          </Grid>
+          <LoadingButton
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            loading={isLoading}
+          >
+            Add contact
+          </LoadingButton>
+        </form>
+      </Box>
+    </Container>
   );
 };

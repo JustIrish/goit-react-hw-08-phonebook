@@ -5,7 +5,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 import { Helmet } from 'react-helmet';
-import { ContactsWrapper } from './Contacts.styled';
+// import { Typography } from '@mui/material';
 import { selectIsLoading, selectError, selectContacts } from 'redux/selectors';
 
 export default function Contacts() {
@@ -19,12 +19,12 @@ export default function Contacts() {
   }, [dispatch]);
 
   return (
-    <ContactsWrapper>
+    <>
       <Helmet>
         <title>Your contacts</title>
       </Helmet>
       <ContactForm />
-      <h2>Contacts</h2>
+      {/* <h2>Contacts</h2> */}
       <Filter />
       {isLoading && !error && <b>Request in progress...</b>}
       {error && (
@@ -33,6 +33,6 @@ export default function Contacts() {
         </div>
       )}
       {contacts.length > 0 && <ContactList />}
-    </ContactsWrapper>
+    </>
   );
 }
