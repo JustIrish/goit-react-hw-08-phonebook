@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Layout } from './Layout/Layout';
+import { Box } from '@mui/material';
+import { RotatingLines } from 'react-loader-spinner';
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from 'hooks';
 import { RestrictedRoute } from './RestrictedRoute';
@@ -21,7 +23,15 @@ export const App = () => {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <b>Refreshing user...</b>
+    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '60px' }}>
+      <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+      />
+    </Box>
   ) : (
     <Routes>
       <Route path="/" element={<Layout />}>
