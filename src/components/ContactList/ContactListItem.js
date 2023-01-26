@@ -10,18 +10,10 @@ import {
   ListItemText,
   Avatar,
   IconButton,
-  ListItemSecondaryAction,
 } from '@mui/material';
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import {
-//   ContactItem,
-//   BtnDelete,
-//   TextWrap,
-//   ContactText,
-//   ContactMarker,
-// } from './ContactListItem.styled';
 
 export const ContactListItem = ({ contact: { id, name, number } }) => {
   // const [isDeleting, setIsDeleting] = useState(false);
@@ -43,7 +35,7 @@ export const ContactListItem = ({ contact: { id, name, number } }) => {
   return (
     <ListItem
       sx={{
-        backgroundColor: 'rgba(0, 138, 255, 0.16)',
+        backgroundColor: 'rgba(152, 174, 194, 0.16)',
         borderRadius: '4px',
         boxShadow: 4,
       }}

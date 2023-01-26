@@ -4,7 +4,7 @@ import { addContact } from 'redux/operations';
 import { selectContacts, selectIsLoading } from 'redux/selectors';
 import { nanoid } from 'nanoid';
 import toast from 'react-hot-toast';
-import { Box, Typography, Container, TextField, Grid } from '@mui/material';
+import { Box, Container, TextField, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 export const ContactForm = () => {

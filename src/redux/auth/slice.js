@@ -26,6 +26,8 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.authIsLoading = false;
+        state.authError = null;
       })
       .addCase(logOut.fulfilled, state => {
         state.user = { name: null, email: null };
@@ -36,11 +38,14 @@ const authSlice = createSlice({
       })
       .addCase(refreshUser.pending, state => {
         state.isRefreshing = true;
+        state.authIsLoading = false;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
+        state.authIsLoading = false;
+        state.authError = null;
       })
       .addCase(refreshUser.rejected, state => {
         state.isRefreshing = false;
@@ -49,7 +54,7 @@ const authSlice = createSlice({
         state.authIsLoading = true;
       })
       .addMatcher(
-        isAnyOf(register.rejected, logIn.rejected),
+        isAnyOf(register.rejected, logIn.rejected, refreshUser.rejected),
         (state, action) => {
           state.authError = action.payload;
           state.authIsLoading = false;
