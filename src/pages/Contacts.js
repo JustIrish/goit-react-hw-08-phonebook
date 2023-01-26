@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchContacts } from 'redux/operations';
+import { fetchContacts } from 'redux/contacts/operations';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 import { Helmet } from 'react-helmet';
-import { Skeleton, Box } from '@mui/material';
-// import { Typography } from '@mui/material';
-import { selectIsLoading, selectError, selectContacts } from 'redux/selectors';
+import { Skeleton, Box, Typography } from '@mui/material';
+import {
+  selectIsLoading,
+  selectError,
+  selectContacts,
+} from 'redux/contacts/selectors';
 
 export default function Contacts() {
   const dispatch = useDispatch();
@@ -47,9 +50,9 @@ export default function Contacts() {
           <ContactForm />
           <Filter />
           {error && (
-            <div style={{ margin: '10px auto' }}>
-              Something went wrong... Try reloading the page
-            </div>
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+              Something went wrong...Try reloading the page
+            </Typography>
           )}
           {contacts.length > 0 ? (
             <ContactList />

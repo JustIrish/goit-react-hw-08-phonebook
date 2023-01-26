@@ -22,6 +22,9 @@ export default function Home() {
       <Typography component="h1" variant="h4">
         Welcome to your Phonebook
       </Typography>
+      <Typography component="p" variant="h6">
+        This app will help you manage your contacts!
+      </Typography>
     </Box>
   );
 }

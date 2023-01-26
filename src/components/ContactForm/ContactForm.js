@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { addContact } from 'redux/operations';
-import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { addContact } from 'redux/contacts/operations';
+import { selectContacts } from 'redux/contacts/selectors';
 import { nanoid } from 'nanoid';
 import toast from 'react-hot-toast';
 import { Box, Container, TextField, Grid } from '@mui/material';
@@ -10,7 +10,7 @@ import { LoadingButton } from '@mui/lab';
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
+  const [isAdding, setIsAdding] = useState(false);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -46,11 +46,14 @@ export const ContactForm = () => {
       return toast.error(`${number} is already in contacts.`);
 
     const contact = { name, number };
+
+    setIsAdding(true);
     dispatch(addContact(contact))
       .unwrap()
       .then(() => {
         toast.success('Contact added!');
         reset();
+        setIsAdding(false);
       })
       .catch(() =>
         toast.error('Something went wrong...Try reloading the page')
@@ -108,7 +111,7 @@ export const ContactForm = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            loading={isLoading}
+            loading={isAdding}
           >
             Add contact
           </LoadingButton>

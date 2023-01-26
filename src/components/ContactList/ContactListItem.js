@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-// import { useState } from 'react';
-import { deleteContact } from 'redux/operations';
-// import { Loader } from 'components/Loader/Loader';
+import { useState } from 'react';
+import { deleteContact } from 'redux/contacts/operations';
+import { Loader } from 'components/Loader/Loader';
 import toast from 'react-hot-toast';
 import PropTypes from 'prop-types';
 import {
@@ -16,16 +16,16 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const ContactListItem = ({ contact: { id, name, number } }) => {
-  // const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useDispatch();
 
   const handleOnDelete = () => {
-    // setIsDeleting(true);
+    setIsDeleting(true);
     dispatch(deleteContact(id))
       .unwrap()
       .then(() => {
         toast.success('Contact deleted!');
-        // setIsDeleting(false);
+        setIsDeleting(false);
       })
       .catch(() =>
         toast.error('Something went wrong...Try reloading the page')
@@ -60,20 +60,9 @@ export const ContactListItem = ({ contact: { id, name, number } }) => {
         }}
         onClick={handleOnDelete}
       >
-        <DeleteIcon />
+        {isDeleting ? <Loader /> : <DeleteIcon />}
       </IconButton>
     </ListItem>
-    // <ContactItem>
-    //   <TextWrap>
-    //     <ContactMarker></ContactMarker>
-    //     <ContactText>
-    //       <span>{name}:</span> <span>{number}</span>
-    //     </ContactText>
-    //   </TextWrap>
-    //   <BtnDelete type="button" onClick={handleOnDelete} disabled={isDeleting}>
-    //     {isDeleting ? <Loader /> : 'Delete'}
-    //   </BtnDelete>
-    // </ContactItem>
   );
 };
 

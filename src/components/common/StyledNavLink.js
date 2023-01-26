@@ -4,6 +4,10 @@ export const styledNavLink = {
   textAlign: 'center',
   padding: '2px',
   borderRadius: '4px',
+  // transitionProperty: 'backgroundColor',
+  // transitionProperty: 'backgroundColor',
+  // transitionDuration: '250ms',
+  // transitionTimingFunction: 'linear',
 
   '&:hover, &:focus': {
     color: 'primary.main',
