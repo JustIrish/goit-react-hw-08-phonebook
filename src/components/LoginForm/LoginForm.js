@@ -19,13 +19,13 @@ export const LoginForm = () => {
       })
     )
       .unwrap()
-      .then(() => toast.success('You have successfully logged in'))
+      .then(() => {
+        toast.success('You have successfully logged in');
+        form.reset();
+      })
       .catch(() =>
-        toast.error(
-          'Something went wrong...Try reloading the page and enter valid email, password'
-        )
+        toast.error('Login or password is not valid... Please try again')
       );
-    form.reset();
   };
 
   return (

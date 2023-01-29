@@ -50,7 +50,7 @@ export default function Contacts() {
           <ContactForm />
           <Filter />
           {error && (
-            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+            <Typography sx={{ m: '32px auto' }} variant="h6" component="div">
               Something went wrong...Try reloading the page
             </Typography>
           )}

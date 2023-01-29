@@ -20,13 +20,15 @@ export const RegisterForm = () => {
       })
     )
       .unwrap()
-      .then(() => toast.success('You have successfully registered'))
+      .then(() => {
+        toast.success('You have successfully registered');
+        form.reset();
+      })
       .catch(() =>
         toast.error(
           'Something went wrong...Try reloading the page and enter data again'
         )
       );
-    form.reset();
   };
 
   return (
