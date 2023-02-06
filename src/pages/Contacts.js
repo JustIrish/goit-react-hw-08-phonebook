@@ -50,11 +50,13 @@ export default function Contacts() {
           <ContactForm />
           <Filter />
           {error && (
-            <Typography sx={{ m: '32px auto' }} variant="h6" component="div">
-              Something went wrong...Try reloading the page
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+              <Typography variant="h6" component="div">
+                Something went wrong...Try reloading the page
+              </Typography>
+            </Box>
           )}
-          {contacts.length > 0 ? (
+          {contacts.length > 0 && !error ? (
             <ContactList />
           ) : (
             <Box
