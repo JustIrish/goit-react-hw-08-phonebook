@@ -2,6 +2,7 @@ import { Box, Modal, Grid, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { schema } from 'components/common/validationSchema';
 import toast from 'react-hot-toast';
 import { selectIsLoading } from 'redux/contacts/selectors';
 import { updateContact } from 'redux/contacts/operations';
@@ -49,6 +50,7 @@ export const EditModal = ({ isOpen, handleClose, id, name, number }) => {
       name,
       number,
     },
+    validationSchema: schema,
     onSubmit: handleSubmit,
   });
 
@@ -72,8 +74,8 @@ export const EditModal = ({ isOpen, handleClose, id, name, number }) => {
                 value={formik.values.name}
                 label="Name"
                 onChange={formik.handleChange}
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,8 +88,8 @@ export const EditModal = ({ isOpen, handleClose, id, name, number }) => {
                 value={formik.values.number}
                 label="Number"
                 onChange={formik.handleChange}
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                error={formik.touched.number && Boolean(formik.errors.number)}
+                helperText={formik.touched.number && formik.errors.number}
               />
             </Grid>
           </Grid>

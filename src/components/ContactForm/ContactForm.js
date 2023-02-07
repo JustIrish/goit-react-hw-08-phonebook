@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
-import { nanoid } from 'nanoid';
+import { useFormik } from 'formik';
+import { schema } from 'components/common/validationSchema';
 import toast from 'react-hot-toast';
 import { Box, Container, TextField, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -11,30 +12,8 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const [isAdding, setIsAdding] = useState(false);
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
 
-  const nameInputId = nanoid();
-  const numberInputId = nanoid();
-
-  const handleChange = evt => {
-    const { name, value } = evt.currentTarget;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-
+  const handleSubmit = ({ name, number }, { resetForm }) => {
     if (
       contacts.some(
         contact => contact.name.toLowerCase() === name.trim().toLowerCase()
@@ -45,14 +24,12 @@ export const ContactForm = () => {
     if (contacts.some(contact => contact.number === number.trim()))
       return toast.error(`${number} is already in contacts.`);
 
-    const contact = { name, number };
-
     setIsAdding(true);
-    dispatch(addContact(contact))
+    dispatch(addContact({ name, number }))
       .unwrap()
       .then(() => {
         toast.success('Contact added!');
-        reset();
+        resetForm();
         setIsAdding(false);
       })
       .catch(() =>
@@ -60,10 +37,14 @@ export const ContactForm = () => {
       );
   };
 
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      number: '',
+    },
+    validationSchema: schema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -75,7 +56,7 @@ export const ContactForm = () => {
           alignItems: 'center',
         }}
       >
-        <form onSubmit={handleSubmit}>
+        <form autoComplete="off" onSubmit={formik.handleSubmit}>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <TextField
@@ -83,12 +64,12 @@ export const ContactForm = () => {
                 name="name"
                 required
                 fullWidth
-                id={nameInputId}
-                value={name}
-                onChange={handleChange}
+                id="name"
+                value={formik.values.name}
                 label="Name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,12 +78,12 @@ export const ContactForm = () => {
                 name="number"
                 required
                 fullWidth
-                id={numberInputId}
-                value={number}
-                onChange={handleChange}
+                id="number"
+                value={formik.values.number}
                 label="Number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                onChange={formik.handleChange}
+                error={formik.touched.number && Boolean(formik.errors.number)}
+                helperText={formik.touched.number && formik.errors.number}
               />
             </Grid>
           </Grid>
